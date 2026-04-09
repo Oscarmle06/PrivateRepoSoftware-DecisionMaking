@@ -1,0 +1,68 @@
+body {
+    font-family: cursive;
+    font-size: large;
+}
+
+
+header {
+    background-color: #f7f1df;
+    font-family: cursive;
+    font-size: x-large;
+}
+
+.datos_header {
+        display: flex;          /* Pone los hijos en fila */
+        list-style: none;       /* Quita los puntos de la lista */
+        margin: 0;
+        padding: 0;
+        gap: 20px;              /* Da espacio entre cada palabra */
+        align-items: left;    /* Centra verticalmente */
+        font-size: large;
+        font-family: cursive;
+        font-size: xx-large;
+
+
+}
+
+.titulo_central {
+    font-family: cursive;
+    font-size: xx-large;
+    justify-content: center; /* Centra horizontalmente */
+    align-items: center;
+    display: grid;
+  place-items: center; /* Hace todo el trabajo por ti */
+  height: 1vh;
+}
+.subtitulo_central {
+    font-family: cursive;
+    font-size: x-large;
+    justify-content: center; /* Centra horizontalmente */
+  align-items: center;
+  display: grid;
+  place-items: center; /* Hace todo el trabajo por ti */
+  height: 10vh;
+}
+
+.menu_titulo {
+font-family: cursive;
+    font-size: xx-large;
+    justify-content: center; /* Centra horizontalmente */
+    align-items: center;
+    display: grid;
+  place-items: left; /* Hace todo el trabajo por ti */
+  height: 10vh;
+}
+
+.menu_items {
+    list-style: none;
+            gap: 20px;              /* Da espacio entre cada palabra */
+
+font-family: cursive;
+    font-size: x-large;
+    justify-content: center; /* Centra horizontalmente */
+    align-items: center;
+    display: grid;
+  place-items: left; /* Hace todo el trabajo por ti */
+  height: 10vh;
+  
+}
