@@ -1,0 +1,87 @@
+/*
+ * Simple animation on the HTML canvas
+ *
+ * Gilberto Echeverria
+ * 2025-02-19
+ */
+
+"use strict";
+
+// Global variables
+const canvasWidth = 800;
+const canvasHeight = 600;
+
+// Context of the Canvas
+let ctx;
+
+let angle = 0;
+let radius = 100;
+
+let oldTime = 0;
+
+// An object to represent the box to be displayed
+const box = {
+    color: "red",
+    size: 50,
+    x: canvasWidth / 2 - 25,
+    y: canvasHeight / 2 - 25,
+}
+
+function main() {
+    // Get a reference to the object with id 'canvas' in the page
+    const canvas = document.getElementById('canvas');
+    // Resize the element
+    canvas.width = canvasWidth;
+    canvas.height = canvasHeight;
+    // Get the context for drawing in 2D
+    ctx = canvas.getContext('2d');
+
+    drawScene(0);
+}
+
+function drawScene(newTime) {
+    // Compute the time elapsed since last frame
+    let deltaTime = newTime - oldTime;
+    //console.log(deltaTime);
+
+    // Clean the canvas so we can draw everything again
+    ctx.clearRect(0, 0, canvasWidth, canvasHeight);
+
+    drawAxes();
+
+    // Update the offset to rotate around the center
+    // TODO: Set different coordinates for the center of rotation
+    let offsetX = canvasWidth / 2;
+    let offsetY = canvasHeight / 2;
+
+
+    // Draw the axis
+    ctx.fillStyle = box.color;
+    ctx.fillRect(box.x + offsetX - box.size / 2,
+                 box.y + offsetY - box.size / 2,
+                 box.size,
+                 box.size);
+
+    // Update vales for next frame
+    angle += 0.001 * deltaTime;
+    // TODO: Use mathematical functions to set the actual position of the object
+    box.x = radius * Math.cos(angle);
+    box.y = radius * Math.sin(angle);
+
+    // Update the previous time
+    // TODO: Make the speed of the motion consistent on all computers
+    oldTime = newTime;
+    requestAnimationFrame(drawScene);
+}
+
+// Draw the reference axes on the canvas
+function drawAxes() {
+    ctx.beginPath();
+    // X axis
+    ctx.moveTo(0, canvasHeight / 2);
+    ctx.lineTo(canvasWidth, canvasHeight / 2);
+    // Y axis
+    ctx.moveTo(canvasWidth / 2, 0);
+    ctx.lineTo(canvasWidth / 2, canvasHeight);
+    ctx.stroke();
+}
