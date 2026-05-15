@@ -24,8 +24,8 @@ let game;
 // Variable to store the time at the previous frame
 let oldTime;
 
-let ballSpeed = 5;
-let paddleSpeed = 8;
+let ballSpeed = 10;
+let paddleSpeed = 12;
 let speedIncrease = 1.5;
 
 // sprites
@@ -343,7 +343,7 @@ class Game {
             this.PowerUpDest.collect();
             if (this.boxes.length > 0) {
                 for (let i = 0; i < 2; i++) {
-                    this.boxes[randomRange(0, this.boxes.length - 1)].destroy = true;
+                    this.boxes.splice(randomRange(0, this.boxes.length - 1), 1);
                     this.scoreleft += 1;
                 }
             }
@@ -382,7 +382,6 @@ class Game {
         const posX = 60;
         const posY = 70;
         const box = new GameObject(new Vector(posX, posY), size, size, "grey");
-        box.destroy = false;
         this.actors.push(box);
     }
 
