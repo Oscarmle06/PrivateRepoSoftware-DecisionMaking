@@ -76,6 +76,7 @@ class Ball extends GameObject {
     }
 }
 
+// Class for Paddle
 class Paddle extends GameObject {
     constructor(position, width, height, color, sheetCols, lives) {
         super(position, width, height, color, "player", sheetCols);
@@ -135,6 +136,7 @@ class Paddle extends GameObject {
     }
 }
 
+// Class for PowerUps
 class PowerUp extends GameObject {
     constructor(position, width, height, color, sheetCols) {
         super(position, width, height, color, "powerup", sheetCols);
@@ -190,6 +192,7 @@ class Game {
         this.ballSpeed *= this.speedIncrease;
     }
     
+    // Initialize the objects in the game
     initObjects() {
 
         this.PowerUpMult = new PowerUp(new Vector(canvasWidth / 2, 600), 20, 20, "yellow");
@@ -199,6 +202,7 @@ class Game {
         this.PowerUpDest = new PowerUp(new Vector(canvasWidth / 2, 600), 20, 20, "yellow");
         this.PowerUpDest.setSprite(PATH_CHIPS);
         this.PowerUpDest.setScale(6);
+
         this.BorderTop = new Border(new Vector(0, 0), canvasWidth *2, 40, "black");
         this.BorderDown = new Border(new Vector(0, canvasHeight ), canvasWidth*2, 40, "black");
         this.BorderLeft = new Border(new Vector(0, 0), 40, canvasHeight * 2, "black");
@@ -218,6 +222,7 @@ class Game {
 
                 this.paddlePlayer.lives = 3;
 
+        // Create the initial ball
         this.balls = [];
         let ball1  = new Ball(new Vector(canvasWidth / 2, canvasHeight - 100), 20, 20, "red", 3);
         ball1.setSprite(PATH_BALL);
@@ -225,6 +230,7 @@ class Game {
         this.balls.push(ball1);
         this.ball = this.balls[0];
 
+        // Create the boxes
         this.boxes = [];
         for (let i = 0; i < 6; i++) {
             let posX = 80 + i * 128;
@@ -239,6 +245,7 @@ class Game {
         }
     }
 
+    // Draw elements on screen
     draw(ctx) {
         ctx.drawImage(tableSprite, 0, 0, canvasWidth, canvasHeight);
         this.scoreLabelLeft.draw(ctx, "Score: " + this.scoreleft)       
@@ -260,13 +267,13 @@ class Game {
 
     update(deltaTime) {
 
+        // Spawn PowerUps
         if (this.scoreleft % 6 == 0 && this.scoreleft !== 0 && this.scoreleft !== this.lastSpawnScore) {
             this.PowerUpMult.spawn();
             this.lastSpawnScore = this.scoreleft; 
             console.log(this.lastSpawnScore)
             console.log(this.PowerUpMult.position)
         }
-        
         if (this.scoreleft % 4 == 0 && this.scoreleft !== 0 && this.scoreleft !== this.lastSpawnScore) {
             this.PowerUpDest.spawn();
             this.lastSpawnScore = this.scoreleft; 
@@ -318,6 +325,7 @@ class Game {
             }
         }
         
+        // PowerUp collision with Paddle
         if (boxOverlap(this.PowerUpMult, this.paddlePlayer)) {
             let newBalls = [];
             this.PowerUpMult.collect();
@@ -338,7 +346,6 @@ class Game {
             this.balls.push(...newBalls);
             playSound(eatSound);
         }
-
         if (boxOverlap(this.PowerUpDest, this.paddlePlayer)) {
             this.PowerUpDest.collect();
             if (this.boxes.length > 0) {
@@ -350,6 +357,7 @@ class Game {
             playSound(eatSound);
         }
 
+        // Respawn ball if all are lost and player has lives left
         if (this.balls.length === 0 && this.paddlePlayer.lives > 0) {
             this.paddlePlayer.lives -= 1;
             if (this.paddlePlayer.lives > 0) {
@@ -386,7 +394,7 @@ class Game {
     }
 
     
-
+    // Create event listeners for the keyboard
     createEventListeners() {
         window.addEventListener('keydown', (event) => {
             if (event.key == 'a') {
@@ -409,6 +417,7 @@ class Game {
         
     }
 
+    // Check if all boxes are destroyed to level up
     checkLevelUp() {
         if (this.boxes.length == 0) {
             this.level += 1;
